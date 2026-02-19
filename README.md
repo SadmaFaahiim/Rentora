@@ -8,19 +8,19 @@
 
 ### 🏠 Home Page
 
-![Home Page](./screenshots/RentRoom_BD.png)
+![Home Page](./ScreenShots/RentRoom_BD.png)
 
 ### 🛏️ Rooms Page — AI Search & Filter
 
-![Rooms Page](./screenshots/RentRoom_BD__1_.png)
+![Rooms Page](./ScreenShots/RentRoom_BD__1_.png)
 
 ### 🗺️ Map View
 
-![Map View](./screenshots/RentRoom_BD__2_.png)
+![Map View](./ScreenShots/RentRoom_BD__2_.png)
 
 ### 💬 Chat System
 
-![Chat](./screenshots/RentRoom_BD__3_.png)
+![Chat](./ScreenShots/RentRoom_BD__3_.png)
 
 ---
 
