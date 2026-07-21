@@ -1,0 +1,29 @@
+# Rentora — AI-Powered Room Rental Platform (Bangladesh)
+
+## Stack
+- Frontend: React 18 → migrating to TypeScript + Vite + TailwindCSS v4
+- Backend: Django 5 + DRF + PostgreSQL 16 + Redis (Phase 3+)
+- Real-time: Django Channels + WebSocket (Phase 4)
+- Payments: SSLCommerz + bKash (Phase 5)
+
+## Project Structure
+- frontend/ — React SPA
+- backend/ — Django project (coming Phase 3)
+- docs/ — Documentation
+
+## Conventions
+- TypeScript strict mode for frontend
+- Django apps: snake_case (rooms, bookings, chat, payments, ai_features)
+- API prefix: /api/v1/
+- Git branches: feature/phase-{N}-{feature-name}
+- Always generate full files, not diffs
+- PR descriptions required for every merge
+
+## Developer
+- Name: Sadman Chowdhury Fahim
+- Git email: faahimsadman@gmail.com
+- Company: NeoNexor Software
+
+## Commands
+- Frontend: cd frontend && npm run dev
+- Backend: cd backend && python manage.py runserver
