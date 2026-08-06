@@ -116,6 +116,11 @@ jobs:
           name: coverage-frontend
           path: coverage/frontend
 
+      - name: Clear previous summary file
+        # The action runs in Docker as root; a file it wrote on a prior run
+        # is root-owned and can't be overwritten on the next run.
+        run: rm -f code-coverage-results.md
+
       - name: Code Coverage Summary Report
         # CodeCoverageSummary only reads Cobertura XML; comma-separated list.
         # Coverage thresholds are already enforced per-job (.coveragerc /
