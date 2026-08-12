@@ -310,6 +310,73 @@ const CAPTURES = [
     out: "otp-verification.png",
     waitMs: 4500,
   },
+  // Phase 11+ — Rentora Copilot: open the floating widget and fire the
+  // Bangla example query so the assistant reply (intent chips + retrieved
+  // listing cards) is on screen.
+  {
+    user: "rahim.hossain",
+    route: "/rooms",
+    out: "copilot.png",
+    waitMs: 4500,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+    afterLoad: `(async () => {
+      const open = [...document.querySelectorAll('button')]
+        .find(b => b.getAttribute('aria-label') === 'Open Rentora Copilot');
+      if (!open) return 'no-open-btn';
+      open.click();
+      await new Promise(r => setTimeout(r, 600));
+      const chip = [...document.querySelectorAll('button')]
+        .find(b => b.textContent.includes('Uttara'));
+      if (!chip) return 'no-chip';
+      chip.click();
+      return 'queried';
+    })()`,
+    afterLoadMs: 4500,
+  },
+  // Phase 11+ — AI pricing suggestion v2: expand a room's "Suggestion" row
+  // on the landlord Insights tab to show range, demand, confidence,
+  // time-to-rent and the explicit "Use price" action.
+  {
+    user: "rahim.hossain",
+    route: "/dashboard?tab=insights",
+    out: "pricing-suggestion.png",
+    waitMs: 5000,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+    afterLoad: `(() => {
+      const btn = [...document.querySelectorAll('button')]
+        .find(b => b.textContent.trim() === 'Suggestion');
+      if (btn) { btn.click(); return 'expanded'; }
+      return 'no-suggestion-btn';
+    })()`,
+    afterLoadMs: 2500,
+  },
+  // Phase 11+ — duplicate-image fraud admin: filter the Fraud Operations
+  // panel by the duplicate_image detector to show the matched-listing chips.
+  // Demo data: two listings share one photo (seeded via the scan demo).
+  {
+    user: "admin",
+    route: "/dashboard",
+    click: "fraud",
+    out: "duplicate-image-fraud.png",
+    waitMs: 4500,
+    afterClickMs: 3000,
+    afterClick: `(() => {
+      const sel = [...document.querySelectorAll('select')]
+        .find(s => [...s.options].some(o => o.value === 'duplicate_image'));
+      if (!sel) return 'no-filter';
+      sel.value = 'duplicate_image';
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      return 'filtered';
+    })()`,
+  },
 ];
 
 // ---- Helpers ----
@@ -563,6 +630,11 @@ async function main() {
         console.log(`   clicked "${label}" tab`);
       }
       await sleep(cap.afterClickMs ?? 2500);
+    }
+
+    if (cap.afterClick) {
+      await evaluate(cap.afterClick);
+      await sleep(cap.afterClickMs ?? 1200);
     }
 
     await shot(cap.out);

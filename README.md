@@ -888,6 +888,18 @@ Passwordless sign-in is live — the phishing-resistant successor to passwords +
 
 <img width="1440" alt="Phase 11 AI Smart Search" src="docs/screenshots/phase11-ai-search.png" />
 
+**Phase 11++ — Rentora Copilot** — the floating conversational assistant: ask in Bangla, English or Banglish ("Uttara-তে ১০ হাজারের মধ্যে room") and it searches **live** listings — intent chips show what it understood, every listed room is a real retrieved row (no hallucination), and follow-ups keep context:
+
+<img width="1440" alt="Rentora Copilot" src="docs/screenshots/copilot.png" />
+
+**Phase 11++ — AI pricing suggestion v2** — landlord Insights row expanded: recommended price + range, demand score, confidence, time-to-rent and the explicit **Use price** action (nothing changes automatically):
+
+<img width="1440" alt="AI Pricing Suggestion" src="docs/screenshots/pricing-suggestion.png" />
+
+**Phase 11++ — Cross-listing duplicate-image fraud** — admin Fraud Operations filtered to the duplicate-image detector, showing the HIGH-severity match with matched-listing chips:
+
+<img width="1440" alt="Duplicate Image Fraud" src="docs/screenshots/duplicate-image-fraud.png" />
+
 **Verified badge — dark theme** (the ✓ Verified pill stays legible in dark mode):
 
 <img width="1440" alt="Verified Badge Dark" src="docs/screenshots/verified-badge-dark.png" />
