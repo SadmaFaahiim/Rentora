@@ -150,10 +150,13 @@ jobs:
       - name: Run drift diff
         id: drift
         # Exit 1 = drift found; that must NOT fail the job (we want the comment
-        # posted, and drift itself is information, not a hard failure).
+        # posted, and drift itself is information, not a hard failure). Use
+        # `set +e` because the default bash -e would abort before EXIT=$?.
         run: |
+          set +e
           python ../docs/tools/schema-drift.py /tmp/base-schema.json /tmp/head-schema.json --out /tmp/drift.md
           EXIT=$?
+          set -e
           echo "drift_found=$([ $EXIT -eq 1 ] && echo 1 || echo 0)" >> "$GITHUB_OUTPUT"
           exit 0
 
@@ -190,7 +193,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Dump OpenAPI schema
-        run: python manage.py spectacular --file ../frontend/src/generated/openapi.json --format openapi-json 2>/dev/null
+        run: |
+          mkdir -p ../frontend/src/generated
+          python manage.py spectacular --file ../frontend/src/generated/openapi.json --format openapi-json 2>/dev/null
 
       - uses: actions/setup-node@v4
         with:

@@ -41,10 +41,11 @@ def _nearby_payload(pair: tuple[Landmark, float] | None) -> dict | None:
 _NEAREST_LANDMARK_SCHEMA = {
     "type": "object",
     "nullable": True,
-    "required": ["key", "name", "distance_km"],
+    "required": ["key", "name", "kind", "distance_km"],
     "properties": {
         "key": {"type": "string"},
         "name": {"type": "string"},
+        "kind": {"type": "string"},
         "distance_km": {"type": "number"},
     },
 }
