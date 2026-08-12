@@ -225,6 +225,83 @@ const CAPTURES = [
     })()`,
     afterLoadMs: 2500,
   },
+  // Phase 11+ — voice search: the microphone button sits inside the search
+  // input. Headless Chrome exposes webkitSpeechRecognition, so the mic
+  // renders in its idle (ready-to-listen) state.
+  {
+    user: "rahim.hossain",
+    route: "/rooms?q=studio",
+    out: "voice-search.png",
+    waitMs: 4500,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+    afterLoad: `(() => {
+      const mic = document.querySelector('button[aria-label="Search by voice"]');
+      return mic ? 'mic-visible' : 'no-mic';
+    })()`,
+    afterLoadMs: 400,
+  },
+  // Phase 11+ — price intelligence: the seeded Premium Studio (Mirpur) is
+  // listed at ৳22,000 while the market model predicts ~৳15.6k, so its card
+  // carries the "41% above market" badge (high-confidence prediction only).
+  {
+    user: "rahim.hossain",
+    route: "/rooms?area=Mirpur",
+    out: "price-anomaly.png",
+    waitMs: 5500,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+  },
+  // Phase 11+ — listing quality: the landlord Insights table now carries the
+  // 0-100 quality score column with level + suggestions popover on tap.
+  {
+    user: "rahim.hossain",
+    route: "/dashboard?tab=insights",
+    out: "listing-quality.png",
+    waitMs: 5000,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+  },
+  // Phase 12+ — admin fraud operations: summary cards, risk filters,
+  // sortable table, expandable evidence, and audited review actions.
+  {
+    user: "admin",
+    route: "/dashboard",
+    click: "fraud",
+    out: "fraud-admin.png",
+    waitMs: 4500,
+    afterClickMs: 3000,
+  },
+  // Phase 11+ — AI saved-search matching: a new listing triggered a
+  // "Highly relevant room found" notification; open the bell dropdown to
+  // show the match reason (area/budget/similar-to-views chips).
+  {
+    user: "rahim.hossain",
+    route: "/rooms?q=studio",
+    out: "saved-search-match.png",
+    waitMs: 4500,
+    beforeCapture: `(() => {
+      localStorage.setItem('rentora-ui',
+        JSON.stringify({ state: { darkMode: false }, version: 0 }));
+      return 'light';
+    })()`,
+    afterLoad: `(() => {
+      const bell = [...document.querySelectorAll('button')]
+        .find(b => b.querySelector('.lucide-bell'));
+      if (bell) { bell.click(); return 'opened'; }
+      return 'no-bell';
+    })()`,
+    afterLoadMs: 1000,
+  },
   // Email-OTP 2FA step: enable 2FA, sign in through the REAL login form
   // (token injection would bypass the challenge), screenshot the code step,
   // then disable 2FA again so the demo accounts stay in their default state.
